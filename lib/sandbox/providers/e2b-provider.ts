@@ -43,7 +43,8 @@ export class E2BProvider extends SandboxProvider {
       // Create base sandbox
       this.sandbox = await Sandbox.create({ 
         apiKey: this.config.e2b?.apiKey || process.env.E2B_API_KEY,
-        timeoutMs: this.config.e2b?.timeoutMs || appConfig.e2b.timeoutMs
+        timeoutMs: this.config.e2b?.timeoutMs || appConfig.e2b.timeoutMs,
+        network: { allowPublicTraffic: true }
       });
       
       const sandboxId = (this.sandbox as any).sandboxId || Date.now().toString();
