@@ -622,6 +622,10 @@ export async function POST(request: NextRequest) {
             if (file.path.endsWith('.jsx') || file.path.endsWith('.js') || file.path.endsWith('.tsx') || file.path.endsWith('.ts')) {
               fileContent = fileContent.replace(/import\s+['"]\.\/[^'"]+\.css['"];?\s*\n?/g, '');
             }
+            // Zangineer fix: the line above also stripped the entry file's Tailwind import, leaving the site unstyled
+            if (/^src\/main\.(jsx|tsx|js|ts)$/.test(normalizedPath) && !/import\s+['"]\.\/index\.css['"]/.test(fileContent)) {
+              fileContent = `import './index.css'\n` + fileContent;
+            }
 
             // Fix common Tailwind CSS errors in CSS files
             if (file.path.endsWith('.css')) {
