@@ -44,6 +44,12 @@ const openai = createOpenAI({
   baseURL: isUsingAIGateway ? aiGatewayBaseURL : process.env.OPENAI_BASE_URL,
 });
 
+// Zangineer fix: OpenRouter as its own provider (free models, no card), key in OPENROUTER_API_KEY
+const openrouter = createOpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+});
+
 // Helper function to analyze user preferences from conversation history
 function analyzeUserPreferences(messages: ConversationMessage[]): {
   commonPatterns: string[];
@@ -1217,14 +1223,17 @@ MORPH FAST APPLY MODE (EDIT-ONLY):
         const isGoogle = model.startsWith('google/');
         const isOpenAI = model.startsWith('openai/');
         const isKimiGroq = model === 'moonshotai/kimi-k2-instruct-0905';
-        const modelProvider = isAnthropic ? anthropic : 
+        const isOpenRouter = model.startsWith('openrouter/');
+        const modelProvider = isOpenRouter ? openrouter : isAnthropic ? anthropic : 
                               (isOpenAI ? openai : 
                               (isGoogle ? googleGenerativeAI : 
                               (isKimiGroq ? groq : groq)));
         
         // Fix model name transformation for different providers
         let actualModel: string;
-        if (isAnthropic) {
+        if (isOpenRouter) {
+          actualModel = model.replace('openrouter/', '');
+        } else if (isAnthropic) {
           actualModel = model.replace('anthropic/', '');
         } else if (isOpenAI) {
           actualModel = model.replace('openai/', '');

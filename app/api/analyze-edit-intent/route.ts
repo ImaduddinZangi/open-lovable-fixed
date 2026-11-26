@@ -26,6 +26,12 @@ const openai = createOpenAI({
   baseURL: isUsingAIGateway ? aiGatewayBaseURL : process.env.OPENAI_BASE_URL,
 });
 
+// Zangineer fix: OpenRouter as its own provider (free models, no card), key in OPENROUTER_API_KEY
+const openrouter = createOpenAI({
+  apiKey: process.env.OPENROUTER_API_KEY,
+  baseURL: 'https://openrouter.ai/api/v1',
+});
+
 const googleGenerativeAI = createGoogleGenerativeAI({
   apiKey: process.env.AI_GATEWAY_API_KEY ?? process.env.GEMINI_API_KEY,
   baseURL: isUsingAIGateway ? aiGatewayBaseURL : undefined,
@@ -105,7 +111,9 @@ export async function POST(request: NextRequest) {
     
     // Select the appropriate AI model based on the request
     let aiModel;
-    if (model.startsWith('anthropic/')) {
+    if (model.startsWith('openrouter/')) {
+      aiModel = openrouter(model.replace('openrouter/', ''));
+    } else if (model.startsWith('anthropic/')) {
       aiModel = anthropic(model.replace('anthropic/', ''));
     } else if (model.startsWith('openai/')) {
       if (model.includes('gpt-oss')) {

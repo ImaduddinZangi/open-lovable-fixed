@@ -50,23 +50,25 @@ export const appConfig = {
   
   // AI Model Configuration
   ai: {
-    // Default AI model
-    defaultModel: 'google/gemini-3-pro-preview',
+    // Default AI model (Zangineer fix: the old default, Gemini 3 Pro Preview, was shut down by Google on 9 March 2026)
+    defaultModel: 'openrouter/nvidia/nemotron-3-ultra-550b-a55b:free',
     
     // Available models
     availableModels: [
+      'openrouter/nvidia/nemotron-3-ultra-550b-a55b:free',
+      'openrouter/google/gemma-4-31b-it:free',
+      'google/gemini-flash-latest',
       'openai/gpt-5',
-      'moonshotai/kimi-k2-instruct-0905',
-      'anthropic/claude-sonnet-4-20250514',
-      'google/gemini-3-pro-preview'
+      'anthropic/claude-sonnet-5-5'
     ],
     
     // Model display names
     modelDisplayNames: {
-      'openai/gpt-5': 'GPT-5',
-      'moonshotai/kimi-k2-instruct-0905': 'Kimi K2 (Groq)',
-      'anthropic/claude-sonnet-4-20250514': 'Sonnet 4',
-      'google/gemini-3-pro-preview': 'Gemini 3 Pro (Preview)'
+      'openrouter/nvidia/nemotron-3-ultra-550b-a55b:free': 'Nemotron 3 Ultra (free)',
+      'openrouter/google/gemma-4-31b-it:free': 'Gemma 4 31B (free)',
+      'google/gemini-flash-latest': 'Gemini Flash (Google key)',
+      'openai/gpt-5': 'GPT-5 (paid)',
+      'anthropic/claude-sonnet-5-5': 'Claude Sonnet 5.5 (paid)'
     } as Record<string, string>,
     
     // Model API configuration
