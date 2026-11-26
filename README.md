@@ -59,7 +59,7 @@ npm run dev
 3. Make it yours in the chat: "Make the colors purple and gold. Replace the logo with the word MYBRAND."
 4. Press the download button (top right) to get the project as `my-website.zip`. To run it: unzip, then `npm install` and `npm run dev`.
 
-Free models take a few minutes per clone. The free sandbox stays on for about 30 minutes, so download your ZIP before you walk away.
+Free models take a few minutes per clone. The free sandbox stays on for up to an hour, so download your ZIP before you walk away.
 
 ## Common errors
 
