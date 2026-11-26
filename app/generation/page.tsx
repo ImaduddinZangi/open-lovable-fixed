@@ -216,7 +216,10 @@ function AISandboxPage() {
             'artistic': 'Creative artistic and unique'
           };
           const styleName = styleNames[storedStyle] || storedStyle;
-          let contextString = `${styleName} style design`;
+          // Zangineer fix: "Original" (id 0) keeps the cloned site's own design instead of forcing a style
+          let contextString = storedStyle === '0'
+            ? "Match the original website's design as closely as possible: the same colors, fonts, layout and spacing"
+            : `${styleName} style design`;
           
           // Add additional instructions if provided
           if (storedInstructions) {

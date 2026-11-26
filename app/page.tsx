@@ -39,7 +39,7 @@ interface SearchResult {
 
 export default function HomePage() {
   const [url, setUrl] = useState<string>("");
-  const [selectedStyle, setSelectedStyle] = useState<string>("1");
+  const [selectedStyle, setSelectedStyle] = useState<string>("0"); // Zangineer fix: default to the original look
   const [selectedModel, setSelectedModel] = useState<string>(appConfig.ai.defaultModel);
   const [isValidUrl, setIsValidUrl] = useState<boolean>(false);
   const [showSearchTiles, setShowSearchTiles] = useState<boolean>(false);
@@ -68,6 +68,7 @@ export default function HomePage() {
   };
 
   const styles = [
+    { id: "0", name: "Original", description: "Keep the site's own look" },
     { id: "1", name: "Glassmorphism", description: "Frosted glass effect" },
     { id: "2", name: "Neumorphism", description: "Soft 3D shadows" },
     { id: "3", name: "Brutalism", description: "Bold and raw" },
@@ -491,7 +492,7 @@ export default function HomePage() {
                         <div className={`mb-2 transition-all duration-300 transform ${
                           isValidUrl ? 'translate-y-0 opacity-100' : '-translate-y-2 opacity-0'
                         }`} style={{ transitionDelay: '100ms' }}>
-                          <div className="grid grid-cols-4 gap-2">
+                          <div className="grid grid-cols-3 gap-2">
                             {styles.map((style, index) => (
                               <button
                                 key={style.id}
