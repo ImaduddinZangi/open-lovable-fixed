@@ -4,10 +4,12 @@ import { parseMorphEdits, applyMorphEditToFile } from '@/lib/morph-fast-apply';
 import type { SandboxState } from '@/types/sandbox';
 import type { ConversationState } from '@/types/conversation';
 import { sandboxManager } from '@/lib/sandbox/sandbox-manager';
+import { legacySandboxFor } from '@/lib/sandbox/legacy-adapter';
 
 declare global {
   var conversationState: ConversationState | null;
   var activeSandboxProvider: any;
+  var activeSandbox: any;
   var existingFiles: Set<string>;
   var sandboxState: SandboxState;
 }
@@ -327,6 +329,7 @@ export async function POST(request: NextRequest) {
 
         // Update legacy global state
         global.activeSandboxProvider = provider;
+        global.activeSandbox = legacySandboxFor(provider);
         console.log(`[apply-ai-code-stream] Successfully got provider for sandbox ${sandboxId}`);
       } catch (providerError) {
         console.error(`[apply-ai-code-stream] Failed to get or create provider for sandbox ${sandboxId}:`, providerError);
@@ -361,6 +364,7 @@ export async function POST(request: NextRequest) {
 
         // Store in legacy global state
         global.activeSandboxProvider = provider;
+        global.activeSandbox = legacySandboxFor(provider);
         global.sandboxData = {
           sandboxId: sandboxInfo.sandboxId,
           url: sandboxInfo.url

@@ -3,10 +3,12 @@ import { SandboxFactory } from '@/lib/sandbox/factory';
 // SandboxProvider type is used through SandboxFactory
 import type { SandboxState } from '@/types/sandbox';
 import { sandboxManager } from '@/lib/sandbox/sandbox-manager';
+import { legacySandboxFor } from '@/lib/sandbox/legacy-adapter';
 
 // Store active sandbox globally
 declare global {
   var activeSandboxProvider: any;
+  var activeSandbox: any;
   var sandboxData: any;
   var existingFiles: Set<string>;
   var sandboxState: SandboxState;
@@ -28,6 +30,7 @@ export async function POST() {
         console.error('Failed to terminate legacy global sandbox:', e);
       }
       global.activeSandboxProvider = null;
+      global.activeSandbox = null;
     }
     
     // Clear existing files tracking
@@ -49,6 +52,7 @@ export async function POST() {
     
     // Also store in legacy global state for backward compatibility
     global.activeSandboxProvider = provider;
+    global.activeSandbox = legacySandboxFor(provider);
     global.sandboxData = {
       sandboxId: sandboxInfo.sandboxId,
       url: sandboxInfo.url
@@ -90,6 +94,7 @@ export async function POST() {
         console.error('Failed to terminate sandbox on error:', e);
       }
       global.activeSandboxProvider = null;
+      global.activeSandbox = null;
     }
     
     return NextResponse.json(

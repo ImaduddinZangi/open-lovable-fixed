@@ -37,7 +37,7 @@ export async function POST() {
     // Read the zip file and convert to base64
     const readResult = await global.activeSandbox.runCommand({
       cmd: 'base64',
-      args: ['/tmp/project.zip']
+      args: ['-w', '0', '/tmp/project.zip']
     });
     
     if (readResult.exitCode !== 0) {
@@ -53,7 +53,7 @@ export async function POST() {
     return NextResponse.json({
       success: true,
       dataUrl,
-      fileName: 'vercel-sandbox-project.zip',
+      fileName: 'my-website.zip',
       message: 'Zip file created successfully'
     });
     

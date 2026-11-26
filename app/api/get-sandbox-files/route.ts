@@ -55,7 +55,7 @@ export async function GET() {
         // Check file size first
         const statResult = await global.activeSandbox.runCommand({
           cmd: 'stat',
-          args: ['-f', '%z', filePath]
+          args: ['-c', '%s', filePath]
         });
         
         if (statResult.exitCode === 0) {
