@@ -31,7 +31,7 @@ export const appConfig = {
   // E2B Sandbox Configuration
   e2b: {
     // Sandbox timeout in minutes
-    timeoutMinutes: 30,
+    timeoutMinutes: 60, // Zangineer fix: free models are slow; 60 is the E2B free plan maximum
 
     // Convert to milliseconds for E2B API
     get timeoutMs() {
